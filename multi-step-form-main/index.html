@@ -14,7 +14,7 @@
 
     .attribution { font-size: 11px; text-align: center; }
     .attribution a { color: hsl(228, 45%, 44%); }
-    
+
     button:focus {
       outline: none;
     }
@@ -26,6 +26,7 @@
       border-radius: 5px;
       background-color: hsl(243, 100%, 62%);
       color: white;
+      max-height: fit-content;
       padding: 10px 20px;
     }
 
@@ -34,9 +35,10 @@
     }
 
     .navigation {
+      max-height: fit-content;
       display: flex;
-      align-self: flex-end;
       justify-content: flex-end;
+      align-self: flex-end;
     }
 
     .back {
@@ -58,6 +60,8 @@
       background-color: hsl(217, 100%, 97%);
     }
 
+    .summary h1 {margin:0 0 10px 0;}
+
     .form-main {
       background-color: hsl(0, 0%, 100%);
       min-height: 550px;
@@ -65,11 +69,11 @@
       border-radius: 10px;
       padding: 10px;
     }
-    .step-1 {display: block;}
-    .step-2 {display: none;}
-    .step-3 {display: none;}
-    .step-4 {display: none;}
-    .step-5 {display: none;}
+    .step-1 {display: grid;}
+    .step-2 {display: none; margin: 50px;}
+    .step-3 {display: none; margin: 50px;}
+    .step-4 {display: none; margin: 50px;}
+    .step-5 {display: none; margin: 50px;}
 
     .form-main {
       display: grid;
@@ -77,7 +81,7 @@
     }
 
     .selection {
-      margin: 50px 0 0 0;
+      margin: 40px 0 30px 0;
       display: flex;
       gap: 20px;
     }
@@ -103,7 +107,8 @@
     }
 
     .step-2 h1 {
-      margin: 50px 0 10px 0;
+      max-height: fit-content;
+      margin: 0 0 10px 0;
     }
     
     .step-2 p {
@@ -124,6 +129,7 @@
     }
 
     .number-circle {
+      font-weight: 600;
       display: flex;
       height: 40px;
       width: 40px;
@@ -173,8 +179,9 @@
     }
 
     .selection-box {
+      width: 400px;
       background-color: hsl(231, 100%, 99%);
-      border: 1px solid hsl(213, 96%, 18%);
+      border: 1px solid hsl(243, 100%, 62%);
       border-radius: 8px;
       margin: 10px 0 10px 0;
     }
@@ -186,6 +193,20 @@
       align-items: center;
       justify-content: space-between;
       gap: 20px;
+    }
+
+    .selection-box h3 {
+      color: hsl(213, 96%, 18%);
+      font-size: 1rem;
+    }
+
+    .step-3 {
+      color: hsl(231, 11%, 63%);
+      font-size: 1rem;
+    }
+
+    .addon-input {
+      margin: 40px 0;
     }
 
     .selection-box:hover {
@@ -209,7 +230,7 @@
       color: hsl(243, 100%, 62%);
     }
 
-    .step-3 h1 {margin:50px 0 10px 0;}
+    .step-3 h1 {margin:0 0 10px 0;}
     .selection-box p {margin:0;}
 
     .step-1 input {
@@ -222,7 +243,7 @@
     }
 
     .step-1 p {color: hsl(231, 11%, 63%);}
-    .step-1 h1 {color: hsl(213, 96%, 18%); margin: 20px 0 10px 0}
+    .step-1 h1 {color: hsl(213, 96%, 18%); margin: 0 0 10px 0}
 
     .input form {
       margin: 40px 0 0 0;
@@ -318,8 +339,8 @@
     .switch {
       position: relative;
       display: inline-block;
-      width: 60px;
-      height: 34px;
+      width: 40px;
+      height: 20px;
     }
 
     .switch input { 
@@ -343,10 +364,10 @@
     .slider:before {
       position: absolute;
       content: "";
-      height: 26px;
-      width: 26px;
-      left: 4px;
-      bottom: 4px;
+      height: 14px;
+      width: 14px;
+      left: 3px;
+      bottom: 3px;
       background-color: white;
       -webkit-transition: .4s;
       transition: .4s;
@@ -361,9 +382,9 @@
     }
 
     input:checked + .slider:before {
-      -webkit-transform: translateX(26px);
-      -ms-transform: translateX(26px);
-      transform: translateX(26px);
+      -webkit-transform: translateX(20px);
+      -ms-transform: translateX(20px);
+      transform: translateX(20px);
     }
 
     /* Rounded sliders */
@@ -380,10 +401,14 @@
     }
 
   .step-5 {
-    text-align: center;
     color: hsl(231, 11%, 63%);
     width: 450px;
-    place-self: center;
+    text-align: center;
+    place-content: center;
+  }
+
+  .step-5 img {
+    justify-self: center;
   }
   .buttons {
     display: flex;
@@ -393,6 +418,14 @@
 
   #error-name, #error-number, #error-email {
     color: hsl(354, 84%, 57%);
+    font-size: 0.9rem;
+    font-weight: 600;
+  }
+
+  .error-format {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
   }
 
   </style>
@@ -440,67 +473,70 @@
     <!-- Step 1 start -->
      <div class="input">
       <div class="step-1" id="step-1">
-        <h1>Personal info</h1>
-        <p>Please provide your name, email address, and phone number.</p>
-        <form>
-          <label for="">Name</label><p id="error-name"></p><br>
-          <input type="text" placeholder="e.g. Stephen King" id="name" required><br>
+        <div class="top-data">
+          <h1>Personal info</h1>
+          <p>Please provide your name, email address, and phone number.</p>
+          <form>
+            <div class="error-format"><label for="">Name</label><p id="error-name"></p></div>
+            <input type="text" placeholder="e.g. Stephen King" id="name" required><br>
 
-          <label for="">Email Address</label><p id="error-email"></p><br>
-          <input type="email" placeholder="e.g. stephenking@lorem.com" id="email" required><br>
-      
-          <label for="">Phone Number</label><p id="error-number"></p><br>
-          <input type="tel" placeholder="e.g. +1 234 567 890" id="number" required><br>
-          <div class="navigation">
-            <button id="next-step-1" type="submit">Next Step</button>
-          </div>
-        </form>
+            <div class="error-format"><label for="">Email Address</label><p id="error-email"></p></div>
+            <input type="email" placeholder="e.g. stephenking@lorem.com" id="email" required><br>
+        
+            <div class="error-format"><label for="">Phone Number</label><p id="error-number"></p></div>
+            <input type="tel" placeholder="e.g. +1 234 567 890" id="number" required><br>
+          </form>
+        </div>
+        <div class="navigation">
+          <button id="next-step-1" type="submit">Next Step</button>
+        </div>
       </div>
 
       <!-- Step 1 end -->
 
       <!-- Step 2 start -->
       <div class="step-2" id="step-2">
-        <h1>Select your plan</h1>
-        <p>You have the option of monthly or yearly billing.</p>
+        <div class="select-plan">
+          <h1>Select your plan</h1>
+          <p>You have the option of monthly or yearly billing.</p>
 
-        <div class="selection">
-          <label id="arcade">
-            <input type="radio" name="plan" value="Arcade" checked>
-            <img src="assets/images/icon-arcade.svg" alt="Arcade Icon">
-            <div>
-              <h3>Arcade</h3>
-              <p id="arcade-price">$9/mo</p>
+          <div class="selection">
+            <label id="arcade">
+              <input type="radio" name="plan" value="Arcade" checked>
+              <img src="assets/images/icon-arcade.svg" alt="Arcade Icon">
+              <div>
+                <h3>Arcade</h3>
+                <p id="arcade-price">$9/mo</p>
+              </div><br>
+            </label>
+            <label id="advanced">
+              <img src="assets/images/icon-advanced.svg" alt="Arcade Icon">
+              <input type="radio" name="plan" value="Advanced">
+              <div>
+                <h3>Advanced</h3>
+                <p id="advanced-price">$12/mo</p>
             </div><br>
-          </label>
-          <label id="advanced">
-            <img src="assets/images/icon-advanced.svg" alt="Arcade Icon">
-            <input type="radio" name="plan" value="Advanced">
-            <div>
-              <h3>Advanced</h3>
-              <p id="advanced-price">$12/mo</p>
-          </div><br>
-          </label>
-          <label id="pro">
-            <img src="assets/images/icon-pro.svg" alt="Arcade Icon">
-            <input type="radio" name="plan" value="Pro">
-            <div>
-              <h3>Pro</h3>
-              <p id="pro-price">$15/mo</p>
+            </label>
+            <label id="pro">
+              <img src="assets/images/icon-pro.svg" alt="Arcade Icon">
+              <input type="radio" name="plan" value="Pro">
+              <div>
+                <h3>Pro</h3>
+                <p id="pro-price">$15/mo</p>
+            </div>
+            </label>
           </div>
-          </label>
-        </div>
 
-        <div class="subscription-type">
-          <p id="monthly">Monthly</p>
-          <label class="switch">
-            <input type="checkbox" id="subscription-type">
-            <span class="slider round"></span>
-          </label>
-          <p id="yearly">Yearly</p>
-        </div>
-
-        <div class="buttons">
+          <div class="subscription-type">
+            <p id="monthly">Monthly</p>
+            <label class="switch">
+              <input type="checkbox" id="subscription-type">
+              <span class="slider round"></span>
+            </label>
+            <p id="yearly">Yearly</p>
+          </div>
+      </div>
+        <div class="navigation buttons">
           <button id="go-back-2" class="back">Go Back</button>
           <button id="next-step-2">Next Step</button>
         </div>
@@ -509,46 +545,49 @@
 
       <!-- Step 3 start -->
       <div class="step-3" id="step-3">
-      <h1>Pick add-ons</h1>
-      <p>Add-ons help enhance your gaming experience.</p>
-
-      <div class="selection-box">
-      <label class="online-services">
-        <div>
-        <input type="checkbox" id="online-services">
-          <div>
-            <h3>Online service</h3>
-            <p>Access to multiplayer games</p>
-          </div>
+        <div class="pick-addon">
+          <h1>Pick add-ons</h1>
+          <p>Add-ons help enhance your gaming experience.</p>
+          <div class="addon-input">
+          <div class="selection-box">
+          <label class="online-services">
+            <div>
+            <input type="checkbox" id="online-services">
+              <div>
+                <h3>Online service</h3>
+                <p>Access to multiplayer games</p>
+              </div>
+            </div>
+              <div class="price"><p id="os-price">+$1/mo</p></div>
+          </label>
         </div>
-          <div class="price"><p id="os-price">+$1/mo</p></div>
-      </label>
-    </div>
-      <div class="selection-box">
-      <label class="larger-storage">
-        <div>
-        <input type="checkbox" id="larger-storage">
-          <div>
-            <h3>Larger storage</h3>
-            <p>Extra 1TB of cloud save</p>
-          </div>
+          <div class="selection-box">
+          <label class="larger-storage">
+            <div>
+            <input type="checkbox" id="larger-storage">
+              <div>
+                <h3>Larger storage</h3>
+                <p>Extra 1TB of cloud save</p>
+              </div>
+            </div>
+              <div class="price"><p id="ls-price">+$2/mo</p></div>
+          </label>
         </div>
-          <div class="price"><p id="ls-price">+$2/mo</p></div>
-      </label>
-    </div>
-      <div class="selection-box">
-      <label class="custom-profile">
-        <div>
-        <input type="checkbox" id="custom-profile">
-          <div>
-            <h3>Customizable Profile</h3>
-            <p>Custom theme on your profile</p>
-          </div>
+          <div class="selection-box">
+          <label class="custom-profile">
+            <div>
+            <input type="checkbox" id="custom-profile">
+              <div>
+                <h3>Customizable Profile</h3>
+                <p>Custom theme on your profile</p>
+              </div>
+            </div>
+              <div class="price"><p id="cp-price">+$2/mo</p></div>
+          </label>
         </div>
-          <div class="price"><p id="cp-price">+$2/mo</p></div>
-      </label>
-    </div>
-      <div class="buttons">
+      </div>
+      </div>
+      <div class="navigation buttons">
         <button id="go-back-3" class="back">Go Back</button>
         <button id="next-step-3">Next Step</button>
       </div>
@@ -556,18 +595,19 @@
       <!-- Step 3 end -->
     <div class="step-4" id="step-4">
       <!-- Step 4 start -->
-    
-      <h1>Finishing up</h1>
-      <p>Double-check everything looks OK before confirming.</p>
+      <div class="summary">
+        <h1>Finishing up</h1>
+        <p>Double-check everything looks OK before confirming.</p>
 
-      <!-- Dynamically add subscription and add-on selections here -->
-       <div class="data" id="data">
+        <!-- Dynamically add subscription and add-on selections here -->
+        <div class="data" id="data">
 
-       </div>
-       <div class="total">
-        <p>Total (per month/year)</p><h3 id="total"></h3>
+        </div>
+        <div class="total">
+          <p>Total (per month/year)</p><h3 id="total"></h3>
+        </div>
       </div>
-      <div class="buttons">
+      <div id="step-4" class="navigation buttons">
         <button id="go-back-4" class="back">Go Back</button>
         <button id="next-step-5">Confirm</button>
       </div>
@@ -637,7 +677,7 @@
 
 
     function updateCircleColors() {
-      const visibleStep = [step1, step2, step3, step4].find(step => step.style.display === 'block');
+      const visibleStep = [step1, step2, step3, step4].find(step => step.style.display === 'grid');
 
       // Kreis 1
       circle1.style.background = visibleStep === step1 ? 'hsl(206, 94%, 87%)' : 'transparent';
@@ -663,30 +703,45 @@
     form_button_1.addEventListener("click", function() {
       event.preventDefault();
       let valid = true;
-      if (UserName.value === '' || null) {
+      if ((UserName.value.includes(' ') === false && UserName.value !== '' || null)) {
+        UserEmail.style.border = '1px solid hsl(354, 84%, 57%)';
+        error_name.innerText = 'Not a valid name'
+        valid = false;
+      } else if (UserName.value === '' || null) {
         UserName.style.border = '1px solid hsl(354, 84%, 57%)';
-        error_name.innerText = 'This field is requiered.'
+        error_name.innerText = 'This field is required';
         valid = false;
       } else {
         UserName.style.border = '1px solid hsl(229, 24%, 87%)';
+        error_name.innerText = '';
       }
-      if (UserEmail.value === '' || null) {
+      if ((UserEmail.value.includes('@') === false && UserEmail.value !== '' || null) || (UserEmail.value.includes('.') === false && UserEmail.value !== '' || null)) {
         UserEmail.style.border = '1px solid hsl(354, 84%, 57%)';
-        error_email.innerText = 'This field is requiered.'
+        error_email.innerText = 'Not a valid email'
+        valid = false;
+      } else if (UserEmail.value === '' || null) {
+        UserEmail.style.border = '1px solid hsl(354, 84%, 57%)';
+        error_email.innerText = 'This field is required'
         valid = false;
       } else {
         UserEmail.style.border = '1px solid hsl(229, 24%, 87%)';
+        error_email.innerText = '';
       }
-      if (UserNumber.value === '' || null) {
+      if ((UserNumber.value.length < 11 && UserNumber.value !== '' || null) || (UserNumber.value.length > 15 && UserNumber.value !== '' || null)) {
         UserNumber.style.border = '1px solid hsl(354, 84%, 57%)';
-        error_number.innerText = 'This field is requiered.'
+        error_number.innerText = 'Not a valid number'
+        valid = false;
+      } else if (UserNumber.value === '' || null) {
+        UserNumber.style.border = '1px solid hsl(354, 84%, 57%)';
+        error_number.innerText = 'This field is required'
         valid = false;
       } else {
         UserNumber.style.border = '1px solid hsl(229, 24%, 87%)';
+        error_number.innerText = '';
       }
       if (valid === true) {
         step1.style.display = 'none';
-        step2.style.display = 'block';
+        step2.style.display = 'grid';
         updateCircleColors();
         input_name = UserName.value;
         input_email = UserEmail.value;
@@ -721,7 +776,7 @@
     form_button_2.addEventListener("click", function() {
       event.preventDefault();
       step2.style.display = 'none';
-      step3.style.display = 'block';
+      step3.style.display = 'grid';
       updateCircleColors();
       input_radio = document.querySelector('input[type="radio"]:checked').value
       subscription_type = document.getElementById('subscription-type').checked;
@@ -731,19 +786,18 @@
     });
     back_button_2.addEventListener("click", function() {
       event.preventDefault();
-      step1.style.display = 'block';
+      step1.style.display = 'grid';
       step2.style.display = 'none';
       updateCircleColors();
     });
     form_button_3.addEventListener("click", function() {
       event.preventDefault();
       step3.style.display = 'none';
-      step4.style.display = 'block';
+      step4.style.display = 'grid';
       updateCircleColors();
       input_onlineservice = document.getElementById('online-services').checked;
       input_largerstorage = document.getElementById('larger-storage').checked;
       input_customprofile = document.getElementById('custom-profile').checked;
-      console.log(input_customprofile);
       total_price = price;
       if (input_onlineservice) if (subscription_type === false) {total_price += 1} else {total_price += 10};
       if (input_largerstorage) if (subscription_type === false) {total_price += 2} else {total_price += 20};
@@ -785,60 +839,92 @@
     });
     back_button_3.addEventListener("click", function() {
       event.preventDefault();
-      step2.style.display = 'block'
+      step2.style.display = 'grid'
       step3.style.display = 'none';
       updateCircleColors();
     });
     confirm_button.addEventListener("click", function() {
-      step5.style.display = 'block';
+      step5.style.display = 'grid';
       step4.style.display = 'none';
     })
     back_button_4.addEventListener("click", function() {
-      step3.style.display = 'block';
+      step3.style.display = 'grid';
       step4.style.display = 'none';
       updateCircleColors();
     });
 
-   const arcade = document.getElementById('arcade');
-   const advanced = document.getElementById('advanced');
-   const pro = document.getElementById('pro');
+    const arcade = document.getElementById('arcade');
+    const advanced = document.getElementById('advanced');
+    const pro = document.getElementById('pro');
 
-   arcade.addEventListener("click", function(){
-    arcade.style.backgroundColor = 'hsl(231, 100%, 99%)';
-    arcade.style.border = '1px solid hsl(243, 100%, 62%)';
-    advanced.style.backgroundColor = 'hsl(0, 0%, 100%)';
-    advanced.style.border = '1px solid hsl(229, 24%, 87%)';
-    pro.style.backgroundColor = 'hsl(0, 0%, 100%)';
-    pro.style.border = '1px solid hsl(229, 24%, 87%)';
-   });
+    arcade.addEventListener("click", function(){
+      arcade.style.backgroundColor = 'hsl(231, 100%, 99%)';
+      arcade.style.border = '1px solid hsl(243, 100%, 62%)';
+      advanced.style.backgroundColor = 'hsl(0, 0%, 100%)';
+      advanced.style.border = '1px solid hsl(229, 24%, 87%)';
+      pro.style.backgroundColor = 'hsl(0, 0%, 100%)';
+      pro.style.border = '1px solid hsl(229, 24%, 87%)';
+    });
 
-   advanced.addEventListener("click", function(){
-    arcade.style.backgroundColor = 'hsl(0, 0%, 100%)';
-    arcade.style.border = '1px solid hsl(229, 24%, 87%)';
-    advanced.style.backgroundColor = 'hsl(231, 100%, 99%)';
-    advanced.style.border = '1px solid hsl(243, 100%, 62%)';
-    pro.style.backgroundColor = 'hsl(0, 0%, 100%)';
-    pro.style.border = '1px solid hsl(229, 24%, 87%)';
-   });
+    advanced.addEventListener("click", function(){
+      arcade.style.backgroundColor = 'hsl(0, 0%, 100%)';
+      arcade.style.border = '1px solid hsl(229, 24%, 87%)';
+      advanced.style.backgroundColor = 'hsl(231, 100%, 99%)';
+      advanced.style.border = '1px solid hsl(243, 100%, 62%)';
+      pro.style.backgroundColor = 'hsl(0, 0%, 100%)';
+      pro.style.border = '1px solid hsl(229, 24%, 87%)';
+    });
 
-   pro.addEventListener("click", function(){
-    arcade.style.backgroundColor = 'hsl(0, 0%, 100%)';
-    arcade.style.border = '1px solid hsl(229, 24%, 87%)';
-    advanced.style.backgroundColor = 'hsl(0, 0%, 100%)';
-    advanced.style.border = '1px solid hsl(229, 24%, 87%)';
-    pro.style.backgroundColor = 'hsl(231, 100%, 99%)';
-    pro.style.border = '1px solid hsl(243, 100%, 62%)';
-   });
+    pro.addEventListener("click", function(){
+      arcade.style.backgroundColor = 'hsl(0, 0%, 100%)';
+      arcade.style.border = '1px solid hsl(229, 24%, 87%)';
+      advanced.style.backgroundColor = 'hsl(0, 0%, 100%)';
+      advanced.style.border = '1px solid hsl(229, 24%, 87%)';
+      pro.style.backgroundColor = 'hsl(231, 100%, 99%)';
+      pro.style.border = '1px solid hsl(243, 100%, 62%)';
+    });
 
-   advanced.addEventListener("hover", function(){
-    advanced.style.backgroundColor = 'hsl(231, 100%, 99%)';
-    advanced.style.border = '1px solid hsl(243, 100%, 62%)';
-   });
+    input_radio = document.querySelector('input[type="radio"][name="plan"]:checked')?.value;
 
-   pro.addEventListener("hover", function(){
-    pro.style.backgroundColor = 'hsl(231, 100%, 99%)';
-    pro.style.border = '1px solid hsl(243, 100%, 62%)';
-   });
-  </script>
-</body>
-</html>
+    document.querySelectorAll('input[type="radio"][name="plan"]').forEach(radio => {
+      radio.addEventListener('change', () => {
+        input_radio = document.querySelector('input[type="radio"][name="plan"]:checked').value;
+      });
+    });
+
+    // Arcade Hover
+    arcade.addEventListener("mouseover", function() {
+      arcade.style.border = '1px solid hsl(243, 100%, 62%)';
+    });
+    arcade.addEventListener("mouseout", function() {
+      if (input_radio !== 'Arcade') {
+        arcade.style.border = '1px solid hsl(229, 24%, 87%)';
+      }
+    });
+
+    // Advanced Hover
+    advanced.addEventListener("mouseover", function() {
+      advanced.style.border = '1px solid hsl(243, 100%, 62%)';
+    });
+    advanced.addEventListener("mouseout", function() {
+      if (input_radio !== 'Advanced') {
+        advanced.style.border = '1px solid hsl(229, 24%, 87%)';
+      }
+    });
+
+    // Pro Hover
+    pro.addEventListener("mouseover", function() {
+      pro.style.border = '1px solid hsl(243, 100%, 62%)';
+    });
+    pro.addEventListener("mouseout", function() {
+      if (input_radio !== 'Pro') {
+        pro.style.border = '1px solid hsl(229, 24%, 87%)';
+      }
+    });
+        </script>
+      </body>
+      </html>
+
+        </script>
+      </body>
+      </html>
